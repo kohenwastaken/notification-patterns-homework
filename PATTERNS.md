@@ -53,3 +53,40 @@ Bildirimlere loglama veya öncelik etiketi gibi ek davranışlar eklemek istendi
 ### Ne kazandırdı?
 
 Mevcut bildirim sınıfları değiştirilmeden yeni özellikler eklendi. Bildirim nesneleri çalışma zamanında farklı decorator'lar ile genişletilebilir hale geldi.
+
+
+---
+
+## Phase 3 - Strategy Pattern
+
+### Nerede kullanıldı?
+
+Strategy Pattern mesaj formatlama davranışlarında kullanıldı. `MessageFormatStrategy` ortak arayüz olarak tanımlandı. `PlainTextFormatStrategy`, `UpperCaseFormatStrategy`, `TimestampFormatStrategy` ve `UrgentFormatStrategy` bu arayüzü uyguladı.
+
+### Neden kullanıldı?
+
+Mesajların farklı formatlarda gönderilebilmesi gerekiyordu. Bu davranışı `NotificationSender` içine if-else bloklarıyla yazmak kodun büyümesine ve değiştirilmesine neden olurdu.
+
+### Ne kazandırdı?
+
+Mesaj formatlama algoritması çalışma zamanında değiştirilebilir hale geldi. Yeni bir formatlama davranışı eklemek için mevcut `NotificationSender` sınıfı değiştirilmeden yeni bir strategy sınıfı eklenebilir.
+
+### OCP Gösterimi
+
+`UrgentFormatStrategy` sınıfı sisteme sonradan eklendi. Bu davranış eklenirken `NotificationSender` değiştirilmedi. Böylece sistem yeni davranışlara açık, mevcut kod değişikliklerine kapalı hale getirildi.
+
+---
+
+## Phase 3 - Observer Pattern
+
+### Nerede kullanıldı?
+
+Observer Pattern `NotificationEventPublisher` ve `NotificationEventListener` yapısında kullanıldı. `ConsoleAuditListener` ve `AnalyticsListener`, bildirim gönderme olaylarını dinleyen sınıflar olarak eklendi.
+
+### Neden kullanıldı?
+
+Bildirim gönderildikten sonra audit log veya analytics gibi ek işlemler yapılmak istendi. Bu işlemleri doğrudan bildirim sınıflarına yazmak sınıfların sorumluluğunu artırırdı.
+
+### Ne kazandırdı?
+
+Bildirim gönderme işlemi ile bildirim sonrası yapılacak işlemler birbirinden ayrıldı. Yeni bir dinleyici eklemek için mevcut bildirim sınıflarını değiştirmeye gerek kalmadı.
