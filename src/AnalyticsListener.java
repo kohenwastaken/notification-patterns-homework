@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
+public class AnalyticsListener implements NotificationEventListener {
 
-public class AnalyticsListener {
+    @Override
+    public void onNotificationSent(String type, String receiver, String message) {
+        System.out.println("[ANALYTICS] Counting notification event for type: " + type);
+    }
 }

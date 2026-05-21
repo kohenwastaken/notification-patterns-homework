@@ -1,4 +1,3 @@
-package PACKAGE_NAME;
-
-public class MessageFormatStrategy {
+public interface MessageFormatStrategy {
+    String format(String message);
 }

@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
+public class PlainTextFormatStrategy implements MessageFormatStrategy {
 
-public class PlainTextFormatStrategy {
+    @Override
+    public String format(String message) {
+        return message;
+    }
 }

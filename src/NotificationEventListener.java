@@ -1,4 +1,3 @@
-package PACKAGE_NAME;
-
-public class NotificationEventListener {
+public interface NotificationEventListener {
+    void onNotificationSent(String type, String receiver, String message);
 }

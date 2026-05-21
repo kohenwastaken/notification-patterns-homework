@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
+public class UrgentFormatStrategy implements MessageFormatStrategy {
 
-public class UrgentFormatStrategy {
+    @Override
+    public String format(String message) {
+        return "[URGENT] " + message;
+    }
 }

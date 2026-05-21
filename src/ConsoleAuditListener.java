@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
+public class ConsoleAuditListener implements NotificationEventListener {
 
-public class ConsoleAuditListener {
+    @Override
+    public void onNotificationSent(String type, String receiver, String message) {
+        System.out.println("[AUDIT] Notification sent. Type: " + type + ", Receiver: " + receiver);
+    }
 }

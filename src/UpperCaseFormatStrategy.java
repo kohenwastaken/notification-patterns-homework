@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
+public class UpperCaseFormatStrategy implements MessageFormatStrategy {
 
-public class UpperCaseFormatStrategy {
+    @Override
+    public String format(String message) {
+        return message.toUpperCase();
+    }
 }
