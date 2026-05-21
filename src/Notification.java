@@ -1,4 +1,3 @@
-package PACKAGE_NAME;
-
-public class Notification {
+public interface Notification {
+    void send(String receiver, String message);
 }

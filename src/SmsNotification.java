@@ -1,4 +1,9 @@
-package PACKAGE_NAME;
+public class SmsNotification implements Notification {
 
-public class SmsNotification {
+    @Override
+    public void send(String receiver, String message) {
+        System.out.println("Connecting to SMS gateway...");
+        System.out.println("Sending SMS to " + receiver);
+        System.out.println("Message: " + message);
+    }
 }
