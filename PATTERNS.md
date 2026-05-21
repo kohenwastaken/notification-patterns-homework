@@ -22,3 +22,34 @@ Bu örüntü özellikle `PROBLEMS.md` dosyasındaki şu sorunları azaltmıştı
 - String ile tip kontrolünün riskli olması
 - Bildirim türlerinin ayrı nesneler olarak modellenmemesi
 - NotificationService sınıfının fazla sorumluluk taşıması
+
+
+## Phase 2 - Adapter Pattern
+
+### Nerede kullanıldı?
+
+Adapter Pattern `DiscordNotificationAdapter` sınıfında kullanıldı. `ExternalDiscordApi` sınıfı mevcut `Notification` interface'ine uymadığı için adapter aracılığıyla sisteme dahil edildi.
+
+### Neden kullanıldı?
+
+Mevcut sistem tüm bildirim türlerinin `send(String receiver, String message)` metodunu kullanmasını bekliyordu. Ancak dış Discord servisi `sendDiscordMessage(String serverName, String channelName, String content)` metodunu kullanıyordu. Adapter Pattern bu uyumsuzluğu çözmek için seçildi.
+
+### Ne kazandırdı?
+
+Dış Discord servisi mevcut bildirim sistemine minimum değişiklikle dahil edildi. Ana bildirim arayüzü korunarak sistemin farklı servislerle çalışması sağlandı.
+
+---
+
+## Phase 2 - Decorator Pattern
+
+### Nerede kullanıldı?
+
+Decorator Pattern `NotificationDecorator`, `LoggingNotificationDecorator` ve `PriorityNotificationDecorator` sınıflarında kullanıldı.
+
+### Neden kullanıldı?
+
+Bildirimlere loglama veya öncelik etiketi gibi ek davranışlar eklemek istendi. Bu davranışları `EmailNotification`, `SmsNotification` veya `PushNotification` sınıflarının içine yazmak kod tekrarına ve sınıfların büyümesine neden olacaktı.
+
+### Ne kazandırdı?
+
+Mevcut bildirim sınıfları değiştirilmeden yeni özellikler eklendi. Bildirim nesneleri çalışma zamanında farklı decorator'lar ile genişletilebilir hale geldi.
