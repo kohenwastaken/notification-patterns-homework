@@ -3,26 +3,34 @@ public class Main {
 
         NotificationFactory factory = new NotificationFactory();
 
-        Notification emailNotification = factory.createNotification("EMAIL");
-        emailNotification.send("user@example.com", "Welcome to the system!");
+        NotificationEventPublisher eventPublisher = new NotificationEventPublisher();
+        eventPublisher.subscribe(new ConsoleAuditListener());
+        eventPublisher.subscribe(new AnalyticsListener());
 
-        Notification smsNotification = factory.createNotification("SMS");
-        smsNotification.send("05551234567", "Your verification code is 1234");
+        NotificationSender sender = new NotificationSender(
+                factory,
+                new PlainTextFormatStrategy(),
+                eventPublisher
+        );
 
-        Notification pushNotification = factory.createNotification("PUSH");
-        pushNotification.send("user123", "You have a new message");
+        sender.send("EMAIL", "user@example.com", "Welcome to the system!");
 
-        Notification discordNotification = factory.createNotification("DISCORD");
-        discordNotification.send("#announcements", "Deployment completed successfully.");
+        sender.setMessageFormatStrategy(new UpperCaseFormatStrategy());
+        sender.send("SMS", "05551234567", "Your verification code is 1234");
 
-        Notification loggedEmailNotification =
-                new LoggingNotificationDecorator(factory.createNotification("EMAIL"));
+        sender.setMessageFormatStrategy(new TimestampFormatStrategy());
+        sender.send("DISCORD", "#announcements", "Deployment completed successfully.");
 
-        loggedEmailNotification.send("admin@example.com", "System health check completed.");
+        sender.setMessageFormatStrategy(new UrgentFormatStrategy());
+        sender.send("PUSH", "user123", "Server CPU usage is high.");
 
-        Notification prioritySmsNotification =
-                new PriorityNotificationDecorator(factory.createNotification("SMS"));
+        Notification decoratedNotification =
+                new LoggingNotificationDecorator(
+                        new PriorityNotificationDecorator(
+                                factory.createNotification("EMAIL")
+                        )
+                );
 
-        prioritySmsNotification.send("05559876543", "Server CPU usage is high.");
+        decoratedNotification.send("admin@example.com", "System health check completed.");
     }
 }
